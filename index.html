@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resumen del Pedido</title>
+    <title>Restaurante</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -12,57 +12,140 @@
             <img src="images/logo.png" alt="Logo del Restaurante" class="logo">
             <nav>
                 <ul>
-                    <li><a href="index.html">Inicio</a></li>
-                    
-                    
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#menu">Menú</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
                 </ul>
             </nav>
         </div>
     </header>
-    <div class="resumen-container">
-        <h1>Resumen del Pedido</h1>
-        <h2>Platos Seleccionados</h2>
-        <ul id="platosSeleccionados"></ul>
-        <h2>Bebidas Seleccionadas</h2>
-        <ul id="bebidasSeleccionadas"></ul>
-        <h2>Método de Pago</h2>
-        <p id="metodoPagoSeleccionado"></p>
-        <p class="total" id="totalPedido"></p>
-        <button>Pagar</button>
-    </div>
+
+    <section id="inicio" class="seccion">
+        <div class="contenido">
+            <h1>Bienvenidos a Nuestro Restaurante</h1>
+            <p>Disfruta de los mejores platos y bebidas en un ambiente único.</p>
+            
+        </div>
+    </section>
+
+    <section id="menu" class="seccion">
+        <div>
+            <img src="images/logo.png" alt="Imagen de inicio" class="imagen-derecha">
+        </div>
+        <div class="contenido">
+            <h1>Menú</h1>
+            <form id="menuForm">
+                <h2> Platos de Fondo</h2>
+                <ul class="menu">
+                    <li>
+                        <input type="checkbox" id="pollo_parrilla" name="plato" value="Pollo a la parrilla - $25">
+                        <label for="pollo_parrilla">
+                            <img src="images/pollo-p.jpg" alt="Pollo a la parrilla">
+                            Pollo a la parrilla - $25
+                        </label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="chuleta_parrilla" name="plato" value="Chuleta a la parrilla - $30">
+                        <label for="chuleta_parrilla">
+                            <img src="images/chuleta-p.jpg" alt="Chuleta a la parrilla">
+                            Chuleta a la parrilla - $30
+                        </label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="pollo_oregano" name="plato" value="Pollo al orégano - $24">
+                        <label for="pollo_oregano">
+                            <img src="images/pollo-a.jpg" alt="Pollo al orégano">
+                            Pollo al orégano - $24
+                        </label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="mollejitas" name="plato" value="Mollejitas - $25">
+                        <label for="mollejitas">
+                            <img src="images/mollejitas.jpg" alt="Mollejitas">
+                            Mollejitas - $25
+                        </label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="alitas_bbq" name="plato" value="Alitas a la BBQ - $30">
+                        <label for="alitas_bbq">
+                            <img src="images/alitas.jpg" alt="Alitas a la BBQ">
+                            Alitas a la BBQ - $30
+                        </label>
+                    </li>
+                    <h2>Bebidas</h2>
+                    <li>
+                        <input type="checkbox" id="limonada_frozen" name="bebida" value="Limonada Frozen - $15">
+                        <label for="limonada_frozen">
+                            <img src="images/limonada.jpg" alt="Limonada Frozen">
+                            Limonada Frozen - $15
+                        </label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="chicha_morada" name="bebida" value="Chicha Morada - $20">
+                        <label for="chicha_morada">
+                            <img src="images/JARRA-DE-CHICHA.png" alt="Chicha Morada">
+                            Chicha Morada - $20
+                        </label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="maracuya" name="bebida" value="Maracuyá - $20">
+                        <label for="maracuya">
+                            <img src="images/maracyuya.png" alt="Maracuyá">
+                            Maracuyá - $20
+                        </label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="inca_kola" name="bebida" value="Gaseosa Inca Kola 1ltr - $10">
+                        <label for="inca_kola">
+                            <img src="images/inca.png" alt="Gaseosa Inca Kola">
+                            Gaseosa Inca Kola 1ltr - $10
+                        </label>
+                    </li>
+                </ul>
+                <h2>Método de Pago</h2>
+                <select id="metodo_pago" name="metodo_pago">
+                    <option value="tarjeta">Yape</option>
+                    <option value="efectivo">Efectivo</option>
+                    <option value="paypal">Trasferencia</option>
+                </select>
+                <br><br>
+                <button type="button" onclick="ordenar()">Ordenar</button>
+            </form>
+        </div>
+    </section>
+
+    <section id="contacto" class="seccion">
+        <div class="contenido">
+            <h1>Contacto</h1>
+            <p>Teléfono: 123-456-7890</p>
+            <p>Dirección: Calle Falsa 123, Ciudad, País</p>
+            <p>Email: contacto@restaurante.com</p>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2023 Restaurante. Todos los derechos reservados.</p>
+    </footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const urlParams = new URLSearchParams(window.location.search);
-            const platos = urlParams.getAll('plato[]');
-            const bebidas = urlParams.getAll('bebida[]');
-            const metodoPago = urlParams.get('metodo_pago');
-
-            const platosSeleccionados = document.getElementById('platosSeleccionados');
-            const bebidasSeleccionadas = document.getElementById('bebidasSeleccionadas');
-            const metodoPagoSeleccionado = document.getElementById('metodoPagoSeleccionado');
-            const totalPedido = document.getElementById('totalPedido');
-
-            let total = 0;
+        function ordenar() {
+            const form = document.getElementById('menuForm');
+            const formData = new FormData(form);
+            const platos = formData.getAll('plato');
+            const bebidas = formData.getAll('bebida');
+            const metodoPago = formData.get('metodo_pago');
+            const url = new URL(window.location.href.replace('index.html', 'resumen.html'));
 
             platos.forEach(plato => {
-                const li = document.createElement('li');
-                li.textContent = plato;
-                platosSeleccionados.appendChild(li);
-                total += parseFloat(plato.split('- $')[1]);
+                url.searchParams.append('plato[]', plato);
             });
-
             bebidas.forEach(bebida => {
-                const li = document.createElement('li');
-                li.textContent = bebida;
-                bebidasSeleccionadas.appendChild(li);
-                total += parseFloat(bebida.split('- $')[1]);
+                url.searchParams.append('bebida[]', bebida);
             });
+            url.searchParams.append('metodo_pago', metodoPago);
 
-            metodoPagoSeleccionado.textContent = metodoPago.charAt(0).toUpperCase() + metodoPago.slice(1);
-
-            totalPedido.textContent = 'Total: $' + total.toFixed(2);
-        });
+            window.location.href = url;
+        }
     </script>
 </body>
 </html>
