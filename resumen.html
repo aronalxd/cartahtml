@@ -54,7 +54,7 @@
                 const li = document.createElement('li');
                 li.textContent = bebida;
                 bebidasSeleccionadas.appendChild(li);
-                total += parseFloat(bebida.split('- $')[1]);
+                total += parseFloat(bebida.split('- s/')[1]);
             });
 
             metodoPagoSeleccionado.textContent = metodoPago.charAt(0).toUpperCase() + metodoPago.slice(1);
