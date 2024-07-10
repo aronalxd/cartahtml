@@ -24,7 +24,6 @@
         <div class="contenido">
             <h1>Bienvenidos a Nuestro Restaurante</h1>
             <p>Disfruta de los mejores platos y bebidas en un ambiente único.</p>
-            
         </div>
     </section>
 
@@ -34,7 +33,7 @@
         </div>
         <div class="contenido">
             <h1>Menú</h1>
-            <form id="menuForm">
+            <form id="menuForm" action="resumen.html" method="GET">
                 <h2> Platos de Fondo</h2>
                 <ul class="menu">
                     <li>
@@ -106,7 +105,7 @@
                 <select id="metodo_pago" name="metodo_pago">
                     <option value="Yape">Yape</option>
                     <option value="Efectivo">Efectivo</option>
-                    <option value="Transferencia">Trasferencia</option>
+                    <option value="Trasferencia">Trasferencia</option>
                 </select>
                 <br><br>
                 <button type="button" onclick="ordenar()">Ordenar</button>
