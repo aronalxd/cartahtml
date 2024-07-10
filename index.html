@@ -22,7 +22,7 @@
 
     <section id="inicio" class="seccion">
         <div class="contenido">
-            <h1>Bienvenidos a Nuestro Restaurante MIPerú</h1>
+            <h1>Bienvenidos a Nuestro Restaurante</h1>
             <p>Disfruta de los mejores platos y bebidas en un ambiente único.</p>
         </div>
     </section>
@@ -34,7 +34,7 @@
         <div class="contenido">
             <h1>Menú</h1>
             <form id="menuForm" action="resumen.html" method="GET">
-                <h2> Platos de Fondo</h2>
+                <h2>Platos de Fondo</h2>
                 <ul class="menu">
                     <li>
                         <input type="checkbox" id="pollo_parrilla" name="plato" value="Pollo a la parrilla - $25">
@@ -133,7 +133,7 @@
             const platos = formData.getAll('plato');
             const bebidas = formData.getAll('bebida');
             const metodoPago = formData.get('metodo_pago');
-            const url = new URL(window.location.href.replace('index.html', 'resumen.html'));
+            const url = new URL('resumen.html', window.location.href);
 
             platos.forEach(plato => {
                 url.searchParams.append('plato[]', plato);
