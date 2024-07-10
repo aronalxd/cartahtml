@@ -47,7 +47,7 @@
                 const li = document.createElement('li');
                 li.textContent = plato;
                 platosSeleccionados.appendChild(li);
-                total += parseFloat(plato.split('- $')[1]);
+                total += parseFloat(plato.split('- s/')[1]);
             });
 
             bebidas.forEach(bebida => {
@@ -59,7 +59,7 @@
 
             metodoPagoSeleccionado.textContent = metodoPago.charAt(0).toUpperCase() + metodoPago.slice(1);
 
-            totalPedido.textContent = 'Total: $' + total.toFixed(2);
+            totalPedido.textContent = 'Total: s/ ' + total.toFixed(2);
         });
     </script>
 </body>
