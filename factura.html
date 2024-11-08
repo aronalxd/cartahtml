@@ -1,102 +1,111 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Factura de Pago</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Factura</title>
     <link rel="stylesheet" href="factura.css">
 </head>
 <body>
-
-<div class="factura-container">
-    <!-- Encabezado de la Factura -->
-    <div class="factura-header">
-        <h1>Factura de Pago</h1>
-        <p>Restaurante MARCORIA</p>
-        <p>Fecha: <span id="fecha"></span></p>
-    </div>
-
-    <!-- Contenido de la Factura -->
-    <div class="factura-content">
-        <h2>Detalles de la Orden</h2>
+    <header>
         
-        <!-- Tabla de Detalles del Pedido -->
-        <table class="factura-items">
+    </header>
+    
+    <div class="factura-container">
+        <h1>Nota De Venta</h1>
+        <h2>Resto Bar MARCORIA</h2>
+        <h3>Dirección: Calle Los Pinos 123, Casma, Perú</h3>
+        <h4>Teléfono: 978 210 809</h4>
+        
+        <!-- Fecha de emisión -->
+        <p id="fechaEmision"><strong>Fecha de Emisión: </strong></p>
+
+        <table id="tablaFactura">
             <thead>
                 <tr>
                     <th>Descripción</th>
                     <th>Precio</th>
                 </tr>
             </thead>
-            <tbody id="detalleFactura">
-                <!-- Aquí se mostrarán los detalles de los pedidos -->
-            </tbody>
+            <tbody id="detallePedido"></tbody>
         </table>
-
-        <!-- Total y Método de Pago -->
-        <p class="factura-total">Total: S/ <span id="total"></span></p>
-        <p><strong>Método de Pago:</strong> <span id="metodoPago"></span></p>
-    </div>
-
-    <!-- Pie de Página de la Factura -->
-    <div class="factura-footer">
-        <p>Gracias por su compra. ¡Vuelva pronto!</p>
-    </div>
-</div>
-
-<!-- Script para Procesar y Mostrar la Factura -->
-<script>
-    // Función para obtener los parámetros de la URL
-    function obtenerParametros() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const platos = urlParams.getAll('plato[]');
-        const bebidas = urlParams.getAll('bebida[]');
-        const metodoPago = urlParams.get('metodo_pago');
-        return { platos, bebidas, metodoPago };
-    }
-
-    // Función para calcular el total
-    function calcularTotal(items) {
-        return items.reduce((total, item) => {
-            const precio = parseFloat(item.split('s/')[1]);
-            return total + precio;
-        }, 0).toFixed(2);
-    }
-
-    // Función para mostrar la factura
-    function mostrarFactura() {
-        const { platos, bebidas, metodoPago } = obtenerParametros();
-        const detalleFactura = document.getElementById('detalleFactura');
-        const items = [...platos, ...bebidas];
         
-        // Agrega cada ítem a la tabla
-        items.forEach(item => {
-            const row = document.createElement('tr');
-            const descripcionCell = document.createElement('td');
-            const precioCell = document.createElement('td');
-            
-            descripcionCell.textContent = item.split(' - ')[0];
-            precioCell.textContent = item.split(' - ')[1];
-            
-            row.appendChild(descripcionCell);
-            row.appendChild(precioCell);
-            detalleFactura.appendChild(row);
+        <table id="tablaResumen">
+            <tr>
+                <td><strong>Total: </strong></td>
+                <td> s/ <span id="total"></span></td>
+            </tr>
+            <tr>
+                <td><strong>Método de Pago:</strong></td>
+                <td><span id="metodoPago"></span></td>
+            </tr>
+        </table>
+        
+        <button onclick="volverInicio()">Volver al Inicio</button>
+        <button onclick="imprimirFactura()">Imprimir</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const platos = urlParams.getAll('plato[]');
+            const bebidas = urlParams.getAll('bebida[]');
+            const metodoPago = urlParams.get('metodo_pago');
+            const detallePedido = document.getElementById('detallePedido');
+            const metodoPagoElem = document.getElementById('metodoPago');
+            const totalElem = document.getElementById('total');
+            const fechaEmisionElem = document.getElementById('fechaEmision');
+            let total = 0;
+
+            // Mostrar fecha de emisión
+            const fechaActual = new Date();
+            const fechaFormateada = fechaActual.toLocaleDateString('es-PE', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            fechaEmisionElem.textContent = `Emisión: ${fechaFormateada}`;
+
+            // Mostrar platos
+            platos.forEach(plato => {
+                const row = document.createElement('tr');
+                const descripcion = document.createElement('td');
+                const precio = document.createElement('td');
+                descripcion.textContent = plato;
+                precio.textContent = `s/ ${plato.split('- s/')[1]}`;
+                row.appendChild(descripcion);
+                row.appendChild(precio);
+                detallePedido.appendChild(row);
+                total += parseFloat(plato.split('- s/')[1]);
+            });
+
+            // Mostrar bebidas
+            bebidas.forEach(bebida => {
+                const row = document.createElement('tr');
+                const descripcion = document.createElement('td');
+                const precio = document.createElement('td');
+                descripcion.textContent = bebida;
+                precio.textContent = `s/ ${bebida.split('- s/')[1]}`;
+                row.appendChild(descripcion);
+                row.appendChild(precio);
+                detallePedido.appendChild(row);
+                total += parseFloat(bebida.split('- s/')[1]);
+            });
+
+            metodoPagoElem.textContent = metodoPago;
+            totalElem.textContent = total.toFixed(2);
         });
 
-        // Muestra el método de pago y el total
-        document.getElementById('metodoPago').textContent = metodoPago;
-        document.getElementById('total').textContent = calcularTotal(items);
+        function volverInicio() {
+            window.location.href = 'index.html';
+        }
 
-        // Muestra la fecha actual
-        const fechaActual = new Date().toLocaleDateString('es-ES');
-        document.getElementById('fecha').textContent = fechaActual;
-    }
-
-    // Llama a la función para mostrar la factura
-    mostrarFactura();
-</script>
-
+        // Función para imprimir la factura
+        function imprimirFactura() {
+            window.print();
+        }
+    </script>
 </body>
 </html>
+
