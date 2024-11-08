@@ -46,66 +46,67 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const urlParams = new URLSearchParams(window.location.search);
-            const platos = urlParams.getAll('plato[]');
-            const bebidas = urlParams.getAll('bebida[]');
-            const metodoPago = urlParams.get('metodo_pago');
-            const detallePedido = document.getElementById('detallePedido');
-            const metodoPagoElem = document.getElementById('metodoPago');
-            const totalElem = document.getElementById('total');
-            const fechaEmisionElem = document.getElementById('fechaEmision');
-            let total = 0;
+    document.addEventListener('DOMContentLoaded', () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const platos = urlParams.getAll('plato[]');
+        const bebidas = urlParams.getAll('bebida[]');
+        const metodoPago = urlParams.get('metodo_pago');
+        const detallePedido = document.getElementById('detallePedido');
+        const metodoPagoElem = document.getElementById('metodoPago');
+        const totalElem = document.getElementById('total');
+        const fechaEmisionElem = document.getElementById('fechaEmision');
+        let total = 0;
 
-            // Mostrar fecha de emisión
-            const fechaActual = new Date();
-            const fechaFormateada = fechaActual.toLocaleDateString('es-PE', {
-                weekday: 'long',
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            });
-            fechaEmisionElem.textContent = `Emisión: ${fechaFormateada}`;
+        // Obtener la fecha actual y formatearla a DD/MM/AAAA
+        const fechaActual = new Date();
+        const dia = String(fechaActual.getDate()).padStart(2, '0'); // Asegura que el día tenga dos dígitos
+        const mes = String(fechaActual.getMonth() + 1).padStart(2, '0'); // Mes es indexado desde 0, por eso sumamos 1
+        const anio = fechaActual.getFullYear();
+        const fechaFormateada = `${dia}/${mes}/${anio}`;
+        
+        // Mostrar fecha de emisión
+        fechaEmisionElem.textContent = `Fecha de Emisión: ${fechaFormateada}`;
 
-            // Mostrar platos
-            platos.forEach(plato => {
-                const row = document.createElement('tr');
-                const descripcion = document.createElement('td');
-                const precio = document.createElement('td');
-                descripcion.textContent = plato;
-                precio.textContent = `s/ ${plato.split('- s/')[1]}`;
-                row.appendChild(descripcion);
-                row.appendChild(precio);
-                detallePedido.appendChild(row);
-                total += parseFloat(plato.split('- s/')[1]);
-            });
-
-            // Mostrar bebidas
-            bebidas.forEach(bebida => {
-                const row = document.createElement('tr');
-                const descripcion = document.createElement('td');
-                const precio = document.createElement('td');
-                descripcion.textContent = bebida;
-                precio.textContent = `s/ ${bebida.split('- s/')[1]}`;
-                row.appendChild(descripcion);
-                row.appendChild(precio);
-                detallePedido.appendChild(row);
-                total += parseFloat(bebida.split('- s/')[1]);
-            });
-
-            metodoPagoElem.textContent = metodoPago;
-            totalElem.textContent = total.toFixed(2);
+        // Mostrar platos
+        platos.forEach(plato => {
+            const row = document.createElement('tr');
+            const descripcion = document.createElement('td');
+            const precio = document.createElement('td');
+            descripcion.textContent = plato;
+            precio.textContent = `s/ ${plato.split('- s/')[1]}`;
+            row.appendChild(descripcion);
+            row.appendChild(precio);
+            detallePedido.appendChild(row);
+            total += parseFloat(plato.split('- s/')[1]);
         });
 
-        function volverInicio() {
-            window.location.href = 'index.html';
-        }
+        // Mostrar bebidas
+        bebidas.forEach(bebida => {
+            const row = document.createElement('tr');
+            const descripcion = document.createElement('td');
+            const precio = document.createElement('td');
+            descripcion.textContent = bebida;
+            precio.textContent = `s/ ${bebida.split('- s/')[1]}`;
+            row.appendChild(descripcion);
+            row.appendChild(precio);
+            detallePedido.appendChild(row);
+            total += parseFloat(bebida.split('- s/')[1]);
+        });
 
-        // Función para imprimir la factura
-        function imprimirFactura() {
-            window.print();
-        }
-    </script>
+        metodoPagoElem.textContent = metodoPago;
+        totalElem.textContent = total.toFixed(2);
+    });
+
+    function volverInicio() {
+        window.location.href = 'index.html';
+    }
+
+    // Función para imprimir la factura
+    function imprimirFactura() {
+        window.print();
+    }
+</script>
+
 </body>
 </html>
 
