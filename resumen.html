@@ -26,7 +26,7 @@
         <h2>Método de Pago</h2>
         <p id="metodoPagoSeleccionado"></p>
         <p class="total" id="totalPedido"></p>
-        <button>Pagar</button>
+        <button type="button" onclick="pagar()">Pagar</button>
     </div>
 
     <script>
@@ -43,6 +43,7 @@
 
             let total = 0;
 
+            // Mostrar los platos seleccionados y calcular total
             platos.forEach(plato => {
                 const li = document.createElement('li');
                 li.textContent = plato;
@@ -50,6 +51,7 @@
                 total += parseFloat(plato.split('- s/')[1]);
             });
 
+            // Mostrar las bebidas seleccionadas y calcular total
             bebidas.forEach(bebida => {
                 const li = document.createElement('li');
                 li.textContent = bebida;
@@ -58,9 +60,30 @@
             });
 
             metodoPagoSeleccionado.textContent = metodoPago.charAt(0).toUpperCase() + metodoPago.slice(1);
-
             totalPedido.textContent = 'Total: s/ ' + total.toFixed(2);
         });
+
+        // Función para redirigir a la factura con los datos del pedido
+        function pagar() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const platos = urlParams.getAll('plato[]');
+            const bebidas = urlParams.getAll('bebida[]');
+            const metodoPago = urlParams.get('metodo_pago');
+            const url = new URL('factura.html', window.location.href);
+
+            // Agrega los parámetros para cada plato y bebida
+            platos.forEach(plato => {
+                url.searchParams.append('plato[]', plato);
+            });
+            bebidas.forEach(bebida => {
+                url.searchParams.append('bebida[]', bebida);
+            });
+            url.searchParams.append('metodo_pago', metodoPago);
+
+            // Redirige a la página de factura
+            window.location.href = url;
+        }
     </script>
 </body>
 </html>
+
