@@ -1,52 +1,87 @@
-/* factura.css */
-
+/* Configuración básica del cuerpo */
 body {
     font-family: Arial, sans-serif;
-    padding: 20px;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #f8f8f8;
 }
 
+/* Centrado del contenedor principal */
 .factura-container {
     max-width: 600px;
-    margin: 0 auto;
+    width: 90%;
+    background-color: #fff;
     padding: 20px;
-    border: 1px solid #ddd;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    border-radius: 8px;
 }
 
-.factura-header, .factura-footer {
+/* Encabezado de la factura */
+header h1 {
     text-align: center;
+    margin-top: 0;
+    color: #333;
 }
 
-.factura-header h1 {
-    font-size: 24px;
-    margin: 0;
-}
-
-.factura-content {
-    margin-top: 20px;
-}
-
-.factura-content h2 {
-    font-size: 20px;
+/* Estilo para la fecha de emisión */
+#fechaEmision {
+    text-align: right;
+    font-size: 14px;
+    color: #555;
     margin-bottom: 10px;
 }
 
-.factura-items {
+/* Estilos de la tabla */
+table {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 20px;
 }
 
-.factura-items th, .factura-items td {
-    padding: 10px;
-    border: 1px solid #ddd;
+th, td {
+    padding: 8px;
     text-align: left;
+    border-bottom: 1px solid #ddd;
 }
 
-.factura-total {
-    text-align: right;
-    font-size: 18px;
-    margin-top: 10px;
+th {
+    background-color: #f2f2f2;
     font-weight: bold;
+}
+
+td {
+    font-size: 16px;
+    color: #555;
+}
+
+/* Estilo de los botones */
+button {
+    padding: 10px 20px;
+    margin-top: 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* Botón de Imprimir */
+button:nth-child(2) {
+    background-color: #007bff;
+}
+
+button:nth-child(2):hover {
+    background-color: #0056b3;
 }
 
