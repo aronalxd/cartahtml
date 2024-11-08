@@ -1,1 +1,102 @@
 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Factura de Pago</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="factura.css">
+</head>
+<body>
+
+<div class="factura-container">
+    <!-- Encabezado de la Factura -->
+    <div class="factura-header">
+        <h1>Factura de Pago</h1>
+        <p>Restaurante MARCORIA</p>
+        <p>Fecha: <span id="fecha"></span></p>
+    </div>
+
+    <!-- Contenido de la Factura -->
+    <div class="factura-content">
+        <h2>Detalles de la Orden</h2>
+        
+        <!-- Tabla de Detalles del Pedido -->
+        <table class="factura-items">
+            <thead>
+                <tr>
+                    <th>Descripción</th>
+                    <th>Precio</th>
+                </tr>
+            </thead>
+            <tbody id="detalleFactura">
+                <!-- Aquí se mostrarán los detalles de los pedidos -->
+            </tbody>
+        </table>
+
+        <!-- Total y Método de Pago -->
+        <p class="factura-total">Total: S/ <span id="total"></span></p>
+        <p><strong>Método de Pago:</strong> <span id="metodoPago"></span></p>
+    </div>
+
+    <!-- Pie de Página de la Factura -->
+    <div class="factura-footer">
+        <p>Gracias por su compra. ¡Vuelva pronto!</p>
+    </div>
+</div>
+
+<!-- Script para Procesar y Mostrar la Factura -->
+<script>
+    // Función para obtener los parámetros de la URL
+    function obtenerParametros() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const platos = urlParams.getAll('plato[]');
+        const bebidas = urlParams.getAll('bebida[]');
+        const metodoPago = urlParams.get('metodo_pago');
+        return { platos, bebidas, metodoPago };
+    }
+
+    // Función para calcular el total
+    function calcularTotal(items) {
+        return items.reduce((total, item) => {
+            const precio = parseFloat(item.split('s/')[1]);
+            return total + precio;
+        }, 0).toFixed(2);
+    }
+
+    // Función para mostrar la factura
+    function mostrarFactura() {
+        const { platos, bebidas, metodoPago } = obtenerParametros();
+        const detalleFactura = document.getElementById('detalleFactura');
+        const items = [...platos, ...bebidas];
+        
+        // Agrega cada ítem a la tabla
+        items.forEach(item => {
+            const row = document.createElement('tr');
+            const descripcionCell = document.createElement('td');
+            const precioCell = document.createElement('td');
+            
+            descripcionCell.textContent = item.split(' - ')[0];
+            precioCell.textContent = item.split(' - ')[1];
+            
+            row.appendChild(descripcionCell);
+            row.appendChild(precioCell);
+            detalleFactura.appendChild(row);
+        });
+
+        // Muestra el método de pago y el total
+        document.getElementById('metodoPago').textContent = metodoPago;
+        document.getElementById('total').textContent = calcularTotal(items);
+
+        // Muestra la fecha actual
+        const fechaActual = new Date().toLocaleDateString('es-ES');
+        document.getElementById('fecha').textContent = fechaActual;
+    }
+
+    // Llama a la función para mostrar la factura
+    mostrarFactura();
+</script>
+
+</body>
+</html>
