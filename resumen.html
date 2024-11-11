@@ -69,7 +69,7 @@
             const platos = urlParams.getAll('plato[]');
             const bebidas = urlParams.getAll('bebida[]');
             const metodoPago = urlParams.get('metodo_pago');
-            const url = new URL('factura.html', window.location.href);
+            const url = new URL('comprobante.html', window.location.href);
 
             // Agrega los parámetros para cada plato y bebida
             platos.forEach(plato => {
